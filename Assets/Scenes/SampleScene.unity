@@ -627,8 +627,9 @@ MonoBehaviour:
   canvas: {fileID: 211816700}
   input_name: {fileID: 1332003360}
   input_password: {fileID: 1239474857}
-  drop_tag: {fileID: 0}
   obj_error: {fileID: 165156615}
+  state_next: {fileID: 8672452064746028605}
+  trans_bottom: {fileID: 1232066998}
 --- !u!1 &217649810
 GameObject:
   m_ObjectHideFlags: 0
@@ -1414,6 +1415,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d39858c403f46f64abaf900dcc580cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  conn: URI=file:C:/UNITY PROJECT/Summer_Practice_2025/Assets\StreamingAssets/DATABASE.db
+  writer: 0
 --- !u!1 &836665777
 GameObject:
   m_ObjectHideFlags: 0
@@ -3024,7 +3027,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0.000035030753, y: 0}
-  m_SizeDelta: {x: -14.039856, y: 230}
+  m_SizeDelta: {x: -14.039978, y: 230}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &675655206463220092
 MonoBehaviour:
@@ -3216,7 +3219,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5902180037359533796}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8672452064746028605}
+        m_TargetAssemblyTypeName: state_Letters, Assembly-CSharp
+        m_MethodName: btn_ExitToLogin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1335019388373252563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4186,13 +4201,28 @@ GameObject:
   - component: {fileID: 5062275486756477693}
   - component: {fileID: 2493878168676654983}
   - component: {fileID: 413970386664483979}
+  - component: {fileID: 8672452064746028605}
   m_Layer: 5
-  m_Name: canvas_notify
+  m_Name: canvas_letters
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!114 &8672452064746028605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8672452064746028604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fbf0c826980ce54d98ab3c47da33440, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  previous: {fileID: 0}
+  canvas: {fileID: 0}
 --- !u!224 &8737303923702844548
 RectTransform:
   m_ObjectHideFlags: 0

@@ -55,13 +55,10 @@ public static class DatabaseCommands
     public static async Task<bool> Entering(string name, string password)
     {
         int que = GenerateQue();
-
-        //Debug.Log("i " + que + "  in list first " + queue[0]);
+        
 
         while (queue[0] != que)
         { await Task.Delay(100); }
-
-        //Debug.Log("work");
 
         _db.OpenConnection();
         string sqlQuery = @$"SELECT id, tags, submited FROM Users WHERE name='{name}' AND password='{password}'";
@@ -80,6 +77,7 @@ public static class DatabaseCommands
             queue.RemoveAll(x => x == que);
 
             _db.CloseConnection();
+
             return true;
         }
         queue.RemoveAll(x => x == que);

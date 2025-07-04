@@ -1,11 +1,14 @@
 using UnityEngine;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 public class StateMachine : MonoBehaviour
 {
     public static StateMachine Instance { get; private set; }
 
     [SerializeField] private State state_start;
+    Dictionary<string,State> all_states=new Dictionary<string, State>();
     private State state_current;
 
     public static bool hasStop = false;
@@ -19,7 +22,7 @@ public class StateMachine : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(this.gameObject); // Опционально, если нужно сохранять между сценами
+        //DontDestroyOnLoad(this.gameObject); // Опционально, если нужно сохранять между сценами
     }
 
     private async void Start()
@@ -32,8 +35,21 @@ public class StateMachine : MonoBehaviour
     {
         Debug.Log("Starting state machine");
         await Exe_State(state_start);
+        SearchAllStates();
+    }
+    void SearchAllStates()
+    {
+        foreach (State s in Resources.FindObjectsOfTypeAll<State>())
+        {
+            all_states.Add(s.GetComponent<State>().GetType().ToString(), s);
+        }
+        Debug.Log(all_states.First().Key);
     }
 
+    public async Task Exe_State(string _state)
+    {
+        await Exe_State(all_states[_state]);
+    }
     public async Task Exe_State(State _state)
     {
         if (_state == null)
@@ -42,7 +58,7 @@ public class StateMachine : MonoBehaviour
             return;
         }
 
-        Debug.Log($"Executing state: {_state.gameObject.name}");
+        Debug.Log($"Executing state: {_state.name}");
 
         if (state_current != null)
         {
