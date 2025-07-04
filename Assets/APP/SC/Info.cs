@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public static class Info
 {
@@ -34,8 +36,28 @@ public class User
         this.id = id;
         this.name = name;
         this.tags = this.tags_to_List(tags);
-        this.submited = (submited!=0);
+        this.submited = (submited != 0);
     }
-
-
+}
+public static class Tools
+{
+    public static async Task DeleteChildren(Transform trans)
+    {
+        foreach (Transform obj in trans.GetComponentsInChildren<Transform>())
+        {
+            if (obj.name != "Content") MonoBehaviour.Destroy(obj.gameObject);
+        }
+    }
+}
+public class chanel
+{
+    public int id;
+    public string name;
+    public bool noReaded;
+    public chanel(int id, string name, bool noread)
+    {
+        this.id = id;
+        this.name = name;
+        this.noReaded = noread;
+    }
 }

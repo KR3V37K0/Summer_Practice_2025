@@ -55,7 +55,7 @@ public static class DatabaseCommands
     public static async Task<bool> Entering(string name, string password)
     {
         int que = GenerateQue();
-        
+
 
         while (queue[0] != que)
         { await Task.Delay(100); }
@@ -82,13 +82,80 @@ public static class DatabaseCommands
         }
         queue.RemoveAll(x => x == que);
         return false;
-        
+
 
 
     }
-    static int GenerateQue() {
+
+    public static async Task<List<chanel>> GetChanels(int _id_user, string _role)
+    {
+        Debug.Log("1");
+        int que = GenerateQue();
+         while (queue[0] != que)
+        { await Task.Delay(100); }
+        Debug.Log("2");
+        _db.OpenConnection();
+        Debug.Log("3");
+
+        string sqlQuery = @$"
+                SELECT
+                chanel.id,
+                chanel.name,
+                EXISTS (
+                    SELECT 1
+                    FROM Posts p
+                    JOIN Reactions r ON r.id_post = p.id
+                    WHERE p.id_chanel = chanel.id
+                    AND r.id_user = {_id_user}
+                    AND r.ver = 0
+                ) AS has_unread
+                FROM Chanels chanel
+                JOIN Chanel_User cu ON cu.id_chanel = chanel.id
+                WHERE cu.id_user = {_id_user} AND cu.role = '{_role}'";
+                    
+        _db.dbcmd.CommandText = sqlQuery;
+        
+        Debug.Log("4");
+        List<chanel> chanels = new List<chanel>();
+        List<int> ids = new List<int>();
+        Debug.Log("5");
+        _db.reader = _db.dbcmd.ExecuteReader();
+        Debug.Log("6");
+        while (_db.reader.Read())
+        {
+            Debug.Log("777");
+
+            chanel cha = new chanel(
+                _db.reader.GetInt32(0),
+                _db.reader.GetString(1),
+                _db.reader.GetInt32(2) == 1
+            );
+
+            if (!ids.Contains(cha.id))
+            {
+                chanels.Add(cha);
+                ids.Add(cha.id);
+            }
+            
+
+            
+        }
+        queue.RemoveAll(x => x == que);
+
+        _db.CloseConnection();
+
+        return chanels;
+    }
+   
+   
+   
+   
+    static int GenerateQue()
+    {
         max_que++;
         queue.Add(max_que);
         return max_que;
     }
+    
+
 }
